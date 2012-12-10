@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 
         watch: {
             files: '<config:jslint.files>',
-            tasks: 'test'
+            tasks: 'jslint test'
         },
 
         jslint: {
@@ -56,7 +56,6 @@ module.exports = function (grunt) {
     });
 
     grunt.loadTasks('tasks');
-    grunt.loadNpmTasks('grunt-jslint');
 
     grunt.registerTask('test', 'combo server qunit');
 };

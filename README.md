@@ -38,9 +38,9 @@ define(function (require) {
 1. 将所有的 require 参数由相对于当前文件的路径转为相对于源码根目录的路径：`require('./math')` 会被转换为 `require('math')`
 1. 分析所有依赖的模块，将依赖的模块名加入 `deps`
 1. 对所有依赖的模块，递归地进行 2-4 步
-1. 将 `deps` 中所有的模块中的代码按顺序合并成一个文件
-1. 将 `loader.js` 的内容加到最终输出文件的开头（提供无 SeaJS 环境下的 `define` 函数支持）
-1. 将 `main.js` 的内容加到最终输出文件的结尾
+1. 将 `deps` 中所有的模块中的代码按顺序合并成一个文件 `main.combo.js`
+1. 将 `loader.js` 的内容加到 `main.combo.js`（提供无 SeaJS 环境下的 `define` 函数支持）
+1. 将 `main.js` 的内容加到 `main.combo.js` 的结尾
 
 ### loader.js
 
@@ -56,9 +56,9 @@ npm install grunt-cmd-combo
 
 grunt-cmd-combo 是一个 MultiTask，支持 3 个参数：
 
-`src` 源码目录。所有的模块都应该放在这个目录下，必须以 `/` 结尾。
+`src` 模块根目录。所有的模块都应该放在这个目录下，必须以 `/` 结尾。
 
-`dest` 目标目录。打包后的文件会输出到这个目录下，并且保持 `src` 目录中的目录结构，必须以 `/` 结尾。
+`dest` 目标目录，必须以 `/` 结尾。
 
 `initModules` 入口模块。文件路径应该相对于 `src` 目录，支持文件通配符指定多个入口模块，会分别打包输出成多个文件。
 
@@ -78,12 +78,12 @@ grunt.initConfig({
 grunt.loadNpmTasks('grunt-cmd-combo');
 ```
 
-会将 `src/main.js` 打包输出到 `dist/main.js`。
+会将 `dist/main.js` 打包输出到 `dist/main.combo.js`。
 
 打包后的代码只需要一个 `<script>` 标签来载入，不需要 SeaJS 支持：
 
 ```
-    <script src="/dist/main.js" data-main="main" type="text/javascript"></script>
+    <script src="/dist/main.combo.js" data-main="main" type="text/javascript"></script>
 ```
 
 ## 优点
@@ -97,6 +97,7 @@ grunt.loadNpmTasks('grunt-cmd-combo');
 
 ## 发布历史
 
+`0.1.4` 2012-12-10 文件增加 `.combo` 后缀。
 `0.1.0` 2012-12-10 首次发布。
 
 ## License

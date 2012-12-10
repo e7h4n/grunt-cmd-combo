@@ -1,7 +1,7 @@
 {
     "name": "grunt-cmd-combo",
-    "description": "Grunt tasks used by fenbi.com.",
-    "version": "0.1.3",
+    "description": "Concat SeaJS module files.",
+    "version": "0.1.4",
     "homepage": "https://github.com/perfectworks/grunt-cmd-combo",
 
     "author": {
@@ -30,7 +30,8 @@
 
     "devDependencies": {
         "grunt": "~0.3.17",
-        "grunt-jslint": "*"
+        "grunt-jslint": "*",
+        "grunt-contrib-copy": "*"
     },
 
     "keywords": ["gruntplugin"],

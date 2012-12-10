@@ -13,7 +13,7 @@ module.exports = function (grunt) {
     var fs = require('fs');
     var cmdModule = require('../lib/cmdModule')(grunt);
 
-    grunt.registerMultiTask('combo', 'Compile handlebars template to SeaJS module.', function () {
+    grunt.registerMultiTask('combo', 'Concat SeaJS modules', function () {
         var src = this.data.src;
         var dest = this.data.dest;
         var initModules = this.data.initModules;
@@ -36,7 +36,7 @@ module.exports = function (grunt) {
                 return memo + modules[modName];
             }, grunt.file.read(loader));
 
-            var outputfile = jsFile.replace(src, dest);
+            var outputfile = jsFile.replace(src, dest).replace(/\.js$/, '.combo.js');
             grunt.file.write(outputfile, finalCode);
         });
     });
