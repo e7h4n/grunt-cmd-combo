@@ -48,6 +48,12 @@ define(function (require) {
 
 ## 使用
 
+安装：
+
+```
+npm install grunt-cmd-combo
+```
+
 grunt-cmd-combo 是一个 MultiTask，支持 3 个参数：
 
 `src` 源码目录。所有的模块都应该放在这个目录下，必须以 `/` 结尾。
@@ -68,6 +74,8 @@ grunt.initConfig({
         }
     }
 });
+
+grunt.loadNpmTasks('grunt-cmd-combo');
 ```
 
 会将 `src/main.js` 打包输出到 `dist/main.js`。
