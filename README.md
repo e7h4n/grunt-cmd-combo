@@ -117,9 +117,9 @@ grunt.initConfig({
 
 ## 发布历史
 
-`0.1.5` 2012-12-10 增加 source map 支持。
-`0.1.4` 2012-12-10 文件增加 `.combo` 后缀。
-`0.1.0` 2012-12-10 首次发布。
+* `0.1.5` 2012-12-10 增加 source map 支持。
+* `0.1.4` 2012-12-10 文件增加 `.combo` 后缀。
+* `0.1.0` 2012-12-10 首次发布。
 
 ## License
 Copyright (c) 2012 PerfectWorks  
@@ -127,3 +127,5 @@ Licensed under the MIT license.
 
 [SeaJS]: http://seajs.org
 [grunt]: http://gruntjs.com
+[网易微博]: http://t.163.com
+[有道云笔记]: http://note.youdao.com
