@@ -40,6 +40,15 @@ module.exports = function (grunt) {
                 src: 'test/src/',
                 dest: 'test/dist/',
                 initModules: 'main.js'
+            },
+
+            testMap: {
+                sourceMap: {
+                    sourceRoot: '/src/'
+                },
+                src: 'test/src/',
+                dest: 'test/dist/',
+                initModules: 'main.js'
             }
         },
 

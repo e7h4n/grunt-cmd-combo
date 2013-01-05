@@ -85,6 +85,26 @@ grunt.loadNpmTasks('grunt-cmd-combo');
 ```
     <script src="/dist/main.combo.js" data-main="main" type="text/javascript"></script>
 ```
+## Source Map
+
+通过一个非空的`sourceMap`参数来控制生成映射文件：
+
+```
+grunt.initConfig({
+    combo: {
+        build: {
+            sourceMap: {
+                sourceRoot: '/src/'
+            },
+            src: 'src/', // 源码目录
+            dest: 'dist/', // 目标目录
+            initModules: 'main.js' // 入口模块，支持文件通配符
+        }
+    }
+});
+```
+
+会同时生成 `dist/main.combo.js` 以及 `dist/main.combo.js.map`。
 
 ## 优点
 
@@ -97,6 +117,7 @@ grunt.loadNpmTasks('grunt-cmd-combo');
 
 ## 发布历史
 
+`0.1.5` 2012-12-10 增加 source map 支持。
 `0.1.4` 2012-12-10 文件增加 `.combo` 后缀。
 `0.1.0` 2012-12-10 首次发布。
 
