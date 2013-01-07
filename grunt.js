@@ -66,5 +66,5 @@ module.exports = function (grunt) {
 
     grunt.loadTasks('tasks');
 
-    grunt.registerTask('test', 'combo server qunit');
+    grunt.registerTask('test', 'combo:testMap server qunit');
 };
