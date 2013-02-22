@@ -16,34 +16,23 @@ module.exports = function (grunt) {
 
     var cmdModule = require('../lib/cmdModule')(grunt);
 
-    function expandFiles(param) {
-        if (grunt.file.expand) {
-            return grunt.file.expand({
-                filter: 'isFile'
-            }, param);
-        }
-
-        return grunt.file.expandFiles(param);
-    }
-
     grunt.registerMultiTask('combo', 'Concat SeaJS modules', function () {
-        var config = this.data;
-        var src = this.data.src;
-        var dest = this.data.dest;
-        var initModules = this.data.initModules;
+        var options = this.options();
 
         var loader = path.resolve(__dirname, '..', 'lib', 'loader.js');
+        this.files.forEach(function (file) {
+            var jsFile = file.src[0];
+            var root = file.orig.cwd;
 
-        expandFiles(src + initModules).forEach(function (jsFile) {
-            var modName = jsFile.replace(src, '').replace(/\.js$/, '');
+            var modName = jsFile.replace(root, '').replace(/\.js$/, '');
             grunt.log.writeln('Module ' + modName.cyan + ' created.');
 
             var depsQueue = [];
             var modules = {};
             var sourceMaps = {};
-            cmdModule.moduleWalk(modName, src, function (modName, ast) {
+            cmdModule.moduleWalk(modName, root, function (modName, ast) {
                 if (!modules[modName]) {
-                    var result = cmdModule.generateJSCode(ast, modName, config.sourceMap);
+                    var result = cmdModule.generateJSCode(ast, modName, options.sourceMap);
                     modules[modName] = result.code;
                     sourceMaps[modName] = result.map;
                 }
@@ -53,10 +42,10 @@ module.exports = function (grunt) {
             depsQueue.push(modName);
 
             var finalMap = null;
-            if (config.sourceMap) {
+            if (options.sourceMap) {
                 finalMap = new sourceMap.SourceMapGenerator(_.defaults({
-                    file: modName + '.combo.js'
-                }, config.sourceMap));
+                    file: modName + file.orig.cwd
+                }, options.sourceMap));
             }
 
             var finalCode = depsQueue.reduce(function (memo, modName) {
@@ -64,7 +53,7 @@ module.exports = function (grunt) {
 
                 var lineCount = memo.split('\n').length - 1;
 
-                if (config.sourceMap) {
+                if (options.sourceMap) {
                     var consumer = new sourceMap.SourceMapConsumer(sourceMaps[modName]);
                     consumer.eachMapping(function (mapping) {
                         var newMapping = {
@@ -90,14 +79,14 @@ module.exports = function (grunt) {
                 return memo + modules[modName];
             }, grunt.file.read(loader));
 
-            var outputfile = jsFile.replace(src, dest).replace(/\.js$/, '.combo.js');
+            var destFile = path.normalize(file.dest);
 
-            if (config.sourceMap) {
-                finalCode += '\n;//@ sourceMappingURL=' + modName + '.combo.js.map';
-                grunt.file.write(outputfile + '.map', finalMap.toString());
+            if (options.sourceMap) {
+                finalCode += '\n;//@ sourceMappingURL=' + modName + file.orig.cwd + '.map';
+                grunt.file.write(destFile + '.map', finalMap.toString());
             }
 
-            grunt.file.write(outputfile, finalCode);
+            grunt.file.write(destFile, finalCode);
         });
     });
 };
