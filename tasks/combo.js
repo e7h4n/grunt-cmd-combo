@@ -16,6 +16,16 @@ module.exports = function (grunt) {
 
     var cmdModule = require('../lib/cmdModule')(grunt);
 
+    function expandFiles(param) {
+        if (grunt.file.expand) {
+            return grunt.file.expand({
+                filter: 'isFile'
+            }, param);
+        }
+
+        return grunt.file.expandFiles(param);
+    }
+
     grunt.registerMultiTask('combo', 'Concat SeaJS modules', function () {
         var config = this.data;
         var src = this.data.src;
@@ -24,7 +34,7 @@ module.exports = function (grunt) {
 
         var loader = path.resolve(__dirname, '..', 'lib', 'loader.js');
 
-        grunt.file.expandFiles(src + initModules).forEach(function (jsFile) {
+        expandFiles(src + initModules).forEach(function (jsFile) {
             var modName = jsFile.replace(src, '').replace(/\.js$/, '');
             grunt.log.writeln('Module ' + modName.cyan + ' created.');
 
