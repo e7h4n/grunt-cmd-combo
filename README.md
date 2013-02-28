@@ -5,7 +5,7 @@
 ## 特点
 
 * 简单，只支持 SeaJS 模块化规范中最精简的一个子集
-* 可靠，经历过[网易微博]、[有道云笔记]等多个项目近 2 年的实际应用检验，从来没出过问题
+* 可靠，经历过[网易微博]、[有道云笔记]、[粉笔网]、[猿题库]等多个项目近 3 年的实际应用检验
 
 grunt-cmd-combo 打包后的文件可以脱离 SeaJS 直接执行。
 
@@ -41,15 +41,7 @@ define(function (require) {
 npm install grunt-cmd-combo
 ```
 
-grunt-cmd-combo 是一个 MultiTask，支持 3 个参数：
-
-`src` 模块根目录。所有的模块都应该放在这个目录下，必须以 `/` 结尾。
-
-`dest` 目标目录，必须以 `/` 结尾。
-
-`initModules` 入口模块。文件路径应该相对于 `src` 目录，支持文件通配符指定多个入口模块，会分别打包输出成多个文件。
-
-参考例子：
+在 `Gruntfile.js` 中加入如下配置：
 
 ```
 grunt.initConfig({
@@ -74,13 +66,14 @@ grunt.initConfig({
 grunt.loadNpmTasks('grunt-cmd-combo');
 ```
 
-会将 `dist/main.js` 打包输出到 `dist/main.combo.js`。
+会将上面例子中的 `main.js` 打包成 `main.combo.js`。
 
 打包后的代码只需要一个 `<script>` 标签来载入，不需要 SeaJS 支持：
 
 ```
     <script src="/dist/main.combo.js" data-main="main" type="text/javascript"></script>
 ```
+
 ## 参数
 
 * `files` (必须) 参考 [grunt files object]
@@ -124,5 +117,7 @@ Licensed under the MIT license.
 [grunt]: http://gruntjs.com
 [网易微博]: http://t.163.com
 [有道云笔记]: http://note.youdao.com
+[粉笔网]: http://fenbi.com
+[猿题库]: http://yuantiku.com
 [SourceMapGenerator]: https://github.com/mozilla/source-map#sourcemapgenerator
 [grunt files object]: http://gruntjs.com/configuring-tasks#files
