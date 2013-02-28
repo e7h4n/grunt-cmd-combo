@@ -119,7 +119,7 @@ grunt.loadNpmTasks('grunt-cmd-combo');
 * `0.1.0` 2012-12-10 首次发布。
 
 ## License
-Copyright (c) 2012 PerfectWorks  
+Copyright (c) 2013 PerfectWorks  
 Licensed under the MIT license.
 
 [SeaJS]: http://seajs.org
