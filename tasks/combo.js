@@ -44,7 +44,7 @@ module.exports = function (grunt) {
             var finalMap = null;
             if (options.sourceMap) {
                 finalMap = new sourceMap.SourceMapGenerator(_.defaults({
-                    file: modName + file.orig.cwd
+                    file: modName + file.orig.ext
                 }, options.sourceMap));
             }
 
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
             var destFile = path.normalize(file.dest);
 
             if (options.sourceMap) {
-                finalCode += '\n;//@ sourceMappingURL=' + modName + file.orig.cwd + '.map';
+                finalCode += '\n;//@ sourceMappingURL=' + modName + file.orig.ext + '.map';
                 grunt.file.write(destFile + '.map', finalMap.toString());
             }
 

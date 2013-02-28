@@ -36,35 +36,46 @@ module.exports = function (grunt) {
         },
 
         combo: {
-            test: {
-                src: 'test/src/',
-                dest: 'test/dist/',
-                initModules: 'main.js'
-            },
-
-            testMap: {
+            options: {
                 sourceMap: {
                     sourceRoot: '/src/'
-                },
-                src: 'test/src/',
-                dest: 'test/dist/',
-                initModules: 'main.js'
+                }
+            },
+            test: {
+                files: [{
+                    expand: true,
+                    cwd: 'test/src/',
+                    src: '**/*.js',
+                    dest: 'test/dist',
+                    ext: '.combo.js'
+                }]
             }
         },
 
-        server: {
-            port: 8990,
-            base: 'test/'
+        connect: {
+            server: {
+                options: {
+                    port: 18000,
+                    base: 'test/'
+                }
+            }
         },
 
         qunit: {
-            all: [
-                'http://localhost:8990/test.html'
-            ]
+            all: {
+                options: {
+                    timeout: 1000,
+                    urls: [
+                        'http://localhost:18000/test.html'
+                    ]
+                }
+            }
         }
     });
 
     grunt.loadTasks('tasks');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
 
-    grunt.registerTask('test', 'combo:testMap server qunit');
+    grunt.registerTask('test', ['combo', 'connect', 'qunit']);
 };

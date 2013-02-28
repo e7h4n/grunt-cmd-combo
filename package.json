@@ -1,7 +1,7 @@
 {
     "name": "grunt-cmd-combo",
     "description": "Concat SeaJS module files.",
-    "version": "0.1.8",
+    "version": "1.0.0",
     "homepage": "https://github.com/perfectworks/grunt-cmd-combo",
 
     "author": {
@@ -29,9 +29,11 @@
     },
 
     "devDependencies": {
-        "grunt": "~0.3.17",
+        "grunt": "~0.4.0",
         "grunt-jslint": "*",
         "grunt-contrib-copy": "*",
+        "grunt-contrib-connect": "*",
+        "grunt-contrib-qunit": "*",
         "underscore": "*"
     },
 

@@ -67,10 +67,19 @@ grunt-cmd-combo 是一个 MultiTask，支持 3 个参数：
 ```
 grunt.initConfig({
     combo: {
+        options: {
+            sourceMap: {
+                sourceRoot: '/src/'
+            }
+        },
         build: {
-            src: 'src/', // 源码目录
-            dest: 'dist/', // 目标目录
-            initModules: 'main.js' // 入口模块，支持文件通配符
+            files: [{
+                expand: true,
+                cwd: 'test/src/',
+                src: '**/*.js',
+                dest: 'test/dist',
+                ext: '.combo.js'
+            }]
         }
     }
 });
@@ -85,26 +94,11 @@ grunt.loadNpmTasks('grunt-cmd-combo');
 ```
     <script src="/dist/main.combo.js" data-main="main" type="text/javascript"></script>
 ```
-## Source Map
+## 参数
 
-通过一个非空的`sourceMap`参数来控制生成映射文件：
-
-```
-grunt.initConfig({
-    combo: {
-        build: {
-            sourceMap: {
-                sourceRoot: '/src/'
-            },
-            src: 'src/', // 源码目录
-            dest: 'dist/', // 目标目录
-            initModules: 'main.js' // 入口模块，支持文件通配符
-        }
-    }
-});
-```
-
-会同时生成 `dist/main.combo.js` 以及 `dist/main.combo.js.map`。
+* `files` (必须) 参考 [grunt files object]
+* `sourceMap` (可选）非空则生成 `sourceMap`，默认不生成
+* `sourceMap.sourceRoot` (可选) 生成 `sourceMap` 中的 `sourceRoot` (参考 [SourceMapGenerator] 中的 `sourceRoot` 参数)
 
 ## 优点
 
@@ -117,6 +111,7 @@ grunt.initConfig({
 
 ## 发布历史
 
+* `1.0.0` 2013-02-28 发布第一个正式版本，更新了 README.md 和 testcase 到 Grunt 0.4.0。
 * `0.1.8` 2013-02-22 Grunt 0.4 支持。
 * `0.1.6` 2013-01-07 保留注释。
 * `0.1.5` 2012-12-10 增加 source map 支持。
@@ -131,3 +126,5 @@ Licensed under the MIT license.
 [grunt]: http://gruntjs.com
 [网易微博]: http://t.163.com
 [有道云笔记]: http://note.youdao.com
+[SourceMapGenerator]: https://github.com/mozilla/source-map#sourcemapgenerator
+[grunt files object]: http://gruntjs.com/configuring-tasks#files
