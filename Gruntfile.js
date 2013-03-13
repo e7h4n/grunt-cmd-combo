@@ -76,6 +76,7 @@ module.exports = function (grunt) {
     grunt.loadTasks('tasks');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-jslint');
 
     grunt.registerTask('test', ['combo', 'connect', 'qunit']);
 };
