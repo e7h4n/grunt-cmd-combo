@@ -1,7 +1,7 @@
 {
     "name": "grunt-cmd-combo",
     "description": "Concat SeaJS module files.",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "homepage": "https://github.com/perfectworks/grunt-cmd-combo",
 
     "author": {
@@ -40,8 +40,9 @@
     "keywords": ["gruntplugin"],
 
     "dependencies": {
-        "underscore": "*",
-        "uglify-js": "*",
-        "source-map": "*"
+        "underscore": "~1.4.4",
+        "uglify-js": "~2.3.6",
+        "source-map": "~0.1.25",
+        "sloc": "~0.0.4"
     }
 }

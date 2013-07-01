@@ -13,13 +13,14 @@ module.exports = function (grunt) {
     var fs = require('fs');
     var sourceMap = require('source-map');
     var _ = require('underscore');
+    var sloc = require('sloc');
 
     var cmdModule = require('../lib/cmdModule')(grunt);
 
     grunt.registerMultiTask('combo', 'Concat SeaJS modules', function () {
         var options = this.options();
 
-        var loader = path.resolve(__dirname, '..', 'lib', 'loader.js');
+        var loader = grunt.file.read(path.resolve(__dirname, '..', 'lib', 'loader.js'));
         this.files.forEach(function (file) {
             var jsFile = file.src[0];
             var root = file.orig.cwd;
@@ -42,17 +43,28 @@ module.exports = function (grunt) {
             depsQueue.push(modName);
 
             var finalMap = null;
+            var lineCount = sloc(loader, 'javascript').loc;
             if (options.sourceMap) {
                 finalMap = new sourceMap.SourceMapGenerator(_.defaults({
                     file: modName + file.orig.ext
                 }, options.sourceMap));
+
+                for (var i = 1; i <= lineCount; i++) {
+                    finalMap.addMapping({
+                        generated: {
+                            line: i,
+                            column: 1
+                        },
+                        original: {
+                            line: i,
+                            column: 1
+                        },
+                        source: 'loader.js'
+                    });
+                }
             }
 
             var finalCode = depsQueue.reduce(function (memo, modName) {
-                memo = memo.replace(/\r\n/g, '\n').replace(/\r/g, '\n') + ';\n';
-
-                var lineCount = memo.split('\n').length - 1;
-
                 if (options.sourceMap) {
                     var consumer = new sourceMap.SourceMapConsumer(sourceMaps[modName]);
                     consumer.eachMapping(function (mapping) {
@@ -76,8 +88,10 @@ module.exports = function (grunt) {
                     });
                 }
 
+                lineCount += sloc(modules[modName], 'javascript').loc;
+
                 return memo + modules[modName];
-            }, grunt.file.read(loader));
+            }, loader);
 
             var destFile = path.normalize(file.dest);
 
